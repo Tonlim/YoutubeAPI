@@ -2,25 +2,12 @@ package application;
 	
 import iohandling.UploadedVideosDatabase;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
-
-import com.google.api.client.googleapis.json.GoogleJsonResponseException;
-import com.google.api.client.http.HttpRequest;
-import com.google.api.client.http.HttpRequestInitializer;
-import com.google.api.services.youtube.YouTube;
-import com.google.api.services.youtube.model.ResourceId;
-import com.google.api.services.youtube.model.SearchListResponse;
-import com.google.api.services.youtube.model.SearchResult;
-import com.google.api.services.youtube.model.Thumbnail;
 
 import data.CustomVideo;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
@@ -34,10 +21,12 @@ import javafx.scene.text.Text;
 
 
 public class Main extends Application {
+	public static HBox centerData;
+	public static Text statusMessage;
+	
 	@Override
 	public void start(Stage primaryStage) {
-		//SearchKeyWord.Main();
-		//UserVideos.Main();
+
 		
 		
 		
@@ -54,14 +43,29 @@ public class Main extends Application {
 			updateDatabase.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
-					UserVideos.updateDatabase();
+					Task<Void> task = new Task<Void>(){
+						@Override
+						protected Void call() throws Exception {
+							UserVideos.updateDatabase();
+							Platform.runLater(new Runnable(){
+								@Override
+								public void run() {
+									setupDatabaseDisplay(centerData);
+									
+								}			
+							});
+							return null;
+						}			
+					};
+					new Thread(task).start();
+					
 				}
 			});
 			
 			//center: data
 			ScrollPane center = new ScrollPane();
 			root.setCenter(center);
-			HBox centerData = new HBox();
+			centerData = new HBox();
 			center.setContent(centerData);
 			/*
 			//colum1: title
@@ -76,6 +80,9 @@ public class Main extends Application {
 			//TODO: loop through all the data and add it to the thingy
 			//TODO: add a status bar at the bottom
 			
+			//bottom: status message
+			statusMessage = new Text("");
+			root.setBottom(statusMessage);
 			
 			
 			Scene scene = new Scene(root,1600,820);
@@ -108,6 +115,7 @@ public class Main extends Application {
 			Text vidDuration = new Text(""+vid.getDuration());
 			duration.getChildren().add(vidDuration);
 		}
+		box.getChildren().clear();
 		box.getChildren().addAll(title,date,duration);
 	}
 	

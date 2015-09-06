@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.services.youtube.YouTube;
@@ -23,6 +24,7 @@ public class UserVideos {
 	private static final String API_KEY = "AIzaSyBB16aIP-SlnWAsD3JFCI1aKBRBbdWF0sc";
 	private static YouTube youtube;
 	private static final String CHANNELNAME = "EthosLab";
+	private static int numberOfVideos;
 	
 	public static void Main(){
 
@@ -31,6 +33,7 @@ public class UserVideos {
 	
 	//loads all etho's videos into the database
 	public static void updateDatabase(){
+		Main.statusMessage.setText("Starting database update...");
 		UploadedVideosDatabase.open();
 		
 		youtube = new YouTube.Builder(Auth.HTTP_TRANSPORT, Auth.JSON_FACTORY, new HttpRequestInitializer() {
@@ -41,17 +44,19 @@ public class UserVideos {
 		UploadedVideosDatabase.reset();
 		//get the IDs of the videos
 		List<String> videoIDs = getUploadedVideoIDs(CHANNELNAME);
-		System.out.println("\n"+videoIDs.size());	//TODO:debug
 				
 		//get the corresponding videos
 		List<CustomVideo> videos = getVideosByID(videoIDs);
 		UploadedVideosDatabase.setVideos(videos);
 		UploadedVideosDatabase.close();
+		Main.statusMessage.setText("Database updated");	
 	}
 	
 	//gets the video IDs of all the uploaded videos of the given user
 	private static List<String> getUploadedVideoIDs(String channelname){
 		List<String> videoIDs = new ArrayList<String>();
+		Main.statusMessage.setText("Gathering uploaded videos");
+
 		try{
 			//get Etho's uploaded videos playlist ID
 			YouTube.Channels.List search = youtube.channels().list("id,snippet,contentDetails");
@@ -62,7 +67,7 @@ public class UserVideos {
 			ChannelListResponse searchResponse = search.execute();
 			List<Channel> results = searchResponse.getItems();
 			String uploadsID = results.get(0).getContentDetails().getRelatedPlaylists().getUploads();
-			
+
 			//get videoIDs in playlist
 			//get first page
 			YouTube.PlaylistItems.List playlistitems = youtube.playlistItems().list("id,snippet,contentDetails");
@@ -90,16 +95,19 @@ public class UserVideos {
 		} catch(Exception e){
 			e.printStackTrace();
 		}
+		numberOfVideos = videoIDs.size();
+		Main.statusMessage.setText(numberOfVideos+" uploaded videos found");
 		return videoIDs;
 	}
 	
 	private static List<CustomVideo> getVideosByID(List<String> videoIDs){
 		List<CustomVideo> videos = new LinkedList<CustomVideo>();
-		int j=0;	//TODO:debug
+		int j=1;
 		for(String i : videoIDs){
 			CustomVideo vid = getVideoByID(i);
 			videos.add(vid);
-			System.out.println(j++);	//TODO:debug
+			Main.statusMessage.setText(j+"/"+numberOfVideos+" video details downloaded");
+			j++;
 		}
 		return videos;
 	}
