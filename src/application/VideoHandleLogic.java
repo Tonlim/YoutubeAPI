@@ -20,18 +20,15 @@ import com.google.api.services.youtube.model.VideoListResponse;
 
 import data.CustomVideo;
 
-public class UserVideos {
+public class VideoHandleLogic {
 	private static final String API_KEY = "AIzaSyBB16aIP-SlnWAsD3JFCI1aKBRBbdWF0sc";
 	private static YouTube youtube;
 	private static final String CHANNELNAME = "EthosLab";
 	private static int numberOfVideos;
 	
-	public static void Main(){
-
-
-	}
-	
-	//loads all etho's videos into the database
+	/*
+	 * loads all etho's videos into the database
+	 */
 	public static void updateDatabase(){
 		Main.statusMessage.setText("Starting database update...");
 		UploadedVideosDatabase.open();
@@ -52,7 +49,9 @@ public class UserVideos {
 		Main.statusMessage.setText("Database updated");	
 	}
 	
-	//gets the video IDs of all the uploaded videos of the given user
+	/*
+	 * gets the video IDs of all the uploaded videos of the given user
+	 */
 	private static List<String> getUploadedVideoIDs(String channelname){
 		List<String> videoIDs = new ArrayList<String>();
 		Main.statusMessage.setText("Gathering uploaded videos");
@@ -100,6 +99,9 @@ public class UserVideos {
 		return videoIDs;
 	}
 	
+	/*
+	 * gets the data of a list of videos
+	 */
 	private static List<CustomVideo> getVideosByID(List<String> videoIDs){
 		List<CustomVideo> videos = new LinkedList<CustomVideo>();
 		int j=1;
@@ -112,6 +114,9 @@ public class UserVideos {
 		return videos;
 	}
 	
+	/*
+	 * gets the data of 1 video
+	 */
 	private static CustomVideo getVideoByID(String id){
 		CustomVideo vid = null;
 		try{
@@ -141,5 +146,7 @@ public class UserVideos {
 		}
 		return vid;
 	}
+	
+	
 
 }

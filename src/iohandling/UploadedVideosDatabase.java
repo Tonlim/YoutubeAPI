@@ -17,7 +17,9 @@ public class UploadedVideosDatabase {
 	private static List<CustomVideo> data;
 	private static final String filename = "uploaded_videos_database.dat";
 	
-	//opens the database
+	/*
+	 * opens the database
+	 */
 	@SuppressWarnings("unchecked")
 	public static synchronized void open(){
 		try {
@@ -32,13 +34,17 @@ public class UploadedVideosDatabase {
 		}
 	}
 	
-	//makes an empty map to start off
+	/*
+	 * makes an empty list to start filling
+	 */
 	private static void firstTimeSetUp(){
 		data = new LinkedList<CustomVideo>();
 		save();
 	}
 	
-	//saves all changes to the database file
+	/*
+	 * saves all changes to the database file
+	 */
 	public static synchronized void save(){
 		try {
 			ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(filename)));
@@ -49,12 +55,16 @@ public class UploadedVideosDatabase {
 		}
 	}
 	
-	//dummy name for save()
+	/*
+	 * dummy name for save()
+	 */
 	public static synchronized void close(){
 		save();
 	}
 	
-	//returns a shallow copy of the database
+	/*
+	 * gets the database in a List<CustomVideo> format (shallow copy)
+	 */
 	public static List<CustomVideo> getVideos() {
 		if(data == null){
 			open();
@@ -62,10 +72,16 @@ public class UploadedVideosDatabase {
 		return data;
 	}
 	
+	/*
+	 * puts the given videos into the database, overrides
+	 */
 	public static void setVideos(List<CustomVideo> vids){
 		data = vids;
 	}
 	
+	/*
+	 * resets the database, deleting everything in the process
+	 */
 	public static void reset(){
 		firstTimeSetUp();
 	}
