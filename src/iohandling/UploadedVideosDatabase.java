@@ -12,9 +12,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 import data.CustomVideo;
+import data.Series;
 
 public class UploadedVideosDatabase {
 	private static List<CustomVideo> data;
+	private static List<Series> series;
 	private static final String filename = "uploaded_videos_database.dat";
 	
 	/*
@@ -25,6 +27,7 @@ public class UploadedVideosDatabase {
 		try {
 			ObjectInputStream in = new ObjectInputStream(new BufferedInputStream(new FileInputStream(filename)));
 			data = (List<CustomVideo>) in.readObject();
+			series = (List<Series>) in.readObject();
 			in.close();
 		} catch (FileNotFoundException e1){
 			firstTimeSetUp();
@@ -39,6 +42,7 @@ public class UploadedVideosDatabase {
 	 */
 	private static void firstTimeSetUp(){
 		data = new LinkedList<CustomVideo>();
+		series = new LinkedList<Series>();
 		save();
 	}
 	
@@ -49,6 +53,7 @@ public class UploadedVideosDatabase {
 		try {
 			ObjectOutputStream out = new ObjectOutputStream(new BufferedOutputStream(new FileOutputStream(filename)));
 			out.writeObject(data);
+			out.writeObject(series);
 			out.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -77,6 +82,23 @@ public class UploadedVideosDatabase {
 	 */
 	public static void setVideos(List<CustomVideo> vids){
 		data = vids;
+	}
+	
+	/*
+	 * gets the series in a List<Series> format (shallow copy)
+	 */
+	public static List<Series> getSeries(){
+		if(series == null){
+			open();
+		}
+		return series;
+	}
+	
+	/*
+	 * puts the given series into the database, overrides
+	 */
+	public static void setSeries(List<Series> input){
+		series = input;
 	}
 	
 	/*

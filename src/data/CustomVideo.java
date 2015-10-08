@@ -132,10 +132,7 @@ public class CustomVideo implements Serializable {
 			if(title.contains("Season") && title.contains("Episode")){
 				placeOfSeason = title.indexOf("Season ")+6;
 				placeOfEpisode = title.indexOf("ode ",placeOfSeason)+4;
-				System.out.println(placeOfSeason);
-				System.out.println(placeOfEpisode);
-				System.out.println(placeOfColon);
-				seriesNumber = Integer.parseInt(title.substring(placeOfSeason+1,placeOfEpisode-10)) * 10000 + Integer.parseInt(title.substring(placeOfEpisode+1,placeOfColon));
+				seriesNumber = Integer.parseInt(title.substring(placeOfSeason+1,placeOfEpisode-10)) * 10000 + Integer.parseInt(title.substring(placeOfEpisode));
 				seriesEpName = title.substring(placeOfColon+2);
 			} else {
 				if(title.contains("S4bE")){
@@ -146,6 +143,248 @@ public class CustomVideo implements Serializable {
 					seriesEpName = title.substring(placeOfColon+2);
 				}
 			}
+		} else {
+		if(title.contains("Minecraft - Mindcrack UHC")){
+			hasSeries = true;
+			isMinecraft = true;
+			seriesName = "Mindcrack Ultra Hardcore";
+			int placeOfSeason = title.indexOf(" S")+1;
+			int placeOfColon = title.indexOf(":");
+			seriesNumber = Integer.parseInt(title.substring(placeOfSeason+1,placeOfColon)) * 10000 + Integer.parseInt(title.substring(placeOfColon+10));
+			seriesEpName = title.substring(placeOfColon+2);
+		} else {
+		if(title.contains("Dwarves vs Zombies")){
+			hasSeries = true;
+			isMinecraft = true;
+			seriesName = "Random Minecraft";
+			seriesNumber = -1;
+			seriesEpName = title;
+		} else {
+		if(title.contains("Hunger Games - Docm's Special")){
+			hasSeries = true;
+			isMinecraft = true;
+			seriesName = "Random Minecraft";
+			seriesNumber = -1;
+			seriesEpName = title;
+		} else {
+		if(title.contains("Etho MindCrack FTB - Episode")){
+			hasSeries = true;
+			isMinecraft = true;
+			seriesName = "Etho MindCrack FTB";
+			int placeOfColon = title.indexOf(":");
+			seriesNumber = Integer.parseInt(title.substring(29,placeOfColon));
+			seriesEpName = title.substring(placeOfColon+2);	
+		} else {
+		if(title.contains("Etho PVP - Revolution: Game")){
+			hasSeries = true;
+			isMinecraft = true;
+			seriesName = "Random Minecraft";
+			seriesNumber = -1;
+			seriesEpName = title;
+		} else {
+		if(title.contains("PlayMindCrack - Episode")){
+			hasSeries = true;
+			isMinecraft = true;
+			seriesName = "Random Mincraft";
+			seriesNumber = -1;
+			seriesEpName = title;
+		} else {
+		if(title.contains("Rush - Spellbound Caves")){
+			hasSeries = true;
+			isMinecraft = true;
+			seriesName = "Spellbound Caves Rush";
+			seriesNumber = Integer.parseInt(title.substring(33));
+			seriesEpName = title.substring(25);
+		} else {
+		if(title.contains("OOGE - Kaizo Caverns")){
+			hasSeries = true;
+			isMinecraft = true;
+			seriesName = "OOGE - KaizoCaverns";
+			seriesNumber = Integer.parseInt(title.substring(30));
+			seriesEpName = title.substring(22);
+		} else {
+		if(title.contains("OOGE - Vinyl Fantasy II")){
+			hasSeries = true;
+			isMinecraft = true;
+			seriesName = "OOGE - Vinyl Fantasy II";
+			seriesNumber = Integer.parseInt(title.substring(33));
+			seriesEpName = title.substring(25);
+		} else {
+		if(title.contains("Map Making - ")){
+			hasSeries = true;
+			isMinecraft = true;
+			seriesName = "Map making";
+			int placeOfColon = title.indexOf(":");
+			seriesNumber = Integer.parseInt(title.substring(placeOfColon+10));
+			seriesEpName = title.substring(placeOfColon+2);
+		} else {
+		if(title.contains("Ruins Of The MindCrackers: Episode")){
+			hasSeries = true;
+			isMinecraft = true;
+			seriesName = "Ruins Of The MindCrackers";
+			seriesNumber = Integer.parseInt(title.substring(35));
+			seriesEpName = title.substring(27);
+		} else {
+		if(title.contains("Minecraft - Ruins Of The MindCrackers 2:")){
+			hasSeries = true;
+			isMinecraft = true;
+			seriesName = "Ruins Of The MindCrackers 2";
+			seriesNumber = Integer.parseInt(title.substring(49));
+			seriesEpName = title.substring(41);
+		} else {
+		if(title.contains("Minecraft Speed Challenge")){
+			hasSeries = true;
+			isMinecraft = true;
+			seriesName = "Speed Challenges";
+			int placeOfFence = title.indexOf("#");
+			int placeOfColon = title.indexOf(":");
+			seriesNumber = Integer.parseInt(title.substring(placeOfFence+1,placeOfColon));
+			seriesEpName = title.substring(placeOfColon+2);
+		} else {
+		if(title.contains("Minecraft - Uncharted Territory:")){
+			hasSeries = true;
+			isMinecraft = true;
+			seriesName = "Uncharted Territory";
+			seriesNumber = Integer.parseInt(title.substring(41));
+			seriesEpName = title.substring(33);
+		} else {
+		if(title.contains("Minecraft - Nail:")){
+			hasSeries = true;
+			isMinecraft = true;
+			seriesName = "Nail";
+			seriesNumber = -1;
+			seriesEpName = title.substring(18);
+		} else {
+		if(title.contains("Minecraft - Uncharted Territory 2:")){
+			hasSeries = true;
+			isMinecraft = true;
+			seriesName = "Uncharted Territory 2";
+			seriesNumber = Integer.parseInt(title.substring(43));
+			seriesEpName = title.substring(35);
+		} else {
+		if(title.contains("Minecraft - Uncharted Territory 3:")){
+			hasSeries = true;
+			isMinecraft = true;
+			seriesName = "Uncharted Territory 3";
+			seriesNumber = Integer.parseInt(title.substring(43));
+			seriesEpName = title.substring(35);
+		} else {
+		if(title.contains("Minecraft MindCrack FTB S2")){
+			hasSeries = true;
+			isMinecraft = true;
+			seriesName = "MindCrack FTB S2";
+			int placeOfColon = title.indexOf(":");
+			seriesNumber = Integer.parseInt(title.substring(37,placeOfColon));
+			seriesEpName = title.substring(placeOfColon+2);
+		} else {
+		if(title.contains("Minecraft - Simulation Protocol:")){
+			hasSeries = true;
+			isMinecraft = true;
+			seriesName = "Simulation Protocol";
+			seriesNumber = Integer.parseInt(title.substring(41));
+			seriesEpName = title.substring(33);
+		} else {
+		if(title.contains("Minecraft TerraFirmaCraft #")){
+			hasSeries = true;
+			isMinecraft = true;
+			seriesName = "TerraFirmaCraft";
+			int placeOfFence = title.indexOf("#");
+			int placeOfColon = title.indexOf(":");
+			seriesNumber = Integer.parseInt(title.substring(placeOfFence+1,placeOfColon));
+			seriesEpName = title.substring(placeOfColon+2);
+		} else {
+		if(title.contains("Minecraft CrackPack #")){
+			hasSeries = true;
+			isMinecraft = true;
+			seriesName = "CrackPack";
+			int placeOfFence = title.indexOf("#");
+			int placeOfColon = title.indexOf(":");
+			seriesNumber = Integer.parseInt(title.substring(placeOfFence+1,placeOfColon));
+			seriesEpName = title.substring(placeOfColon+2);
+		} else {
+		if(title.contains("Minecraft - Crash Landing #")){
+			hasSeries = true;
+			isMinecraft = true;
+			seriesName = "Crash Landing";
+			int placeOfFence = title.indexOf("#");
+			int placeOfColon = title.indexOf(":");
+			seriesNumber = Integer.parseInt(title.substring(placeOfFence+1,placeOfColon));
+			seriesEpName = title.substring(placeOfColon+2);
+		} else {
+		if(title.contains("Minecraft - SoF #")){
+			hasSeries = true;
+			isMinecraft = true;
+			seriesName = "Survival of the Fittest";
+			int placeOfFence = title.indexOf("#");
+			int placeOfColon = title.indexOf(":");
+			seriesNumber = Integer.parseInt(title.substring(placeOfFence+1,placeOfColon))+10000;
+			seriesEpName = title.substring(placeOfColon+2);
+		} else {
+		if(title.contains("Minecraft - SoF S2 #")){
+			hasSeries = true;
+			isMinecraft = true;
+			seriesName = "Survival of the Fittest";
+			int placeOfFence = title.indexOf("#");
+			int placeOfColon = title.indexOf(":");
+			seriesNumber = Integer.parseInt(title.substring(placeOfFence+1,placeOfColon))+20000;
+			seriesEpName = title.substring(placeOfColon+2);
+		} else {
+		if(title.contains("Minecraft - Fly Boys #")){
+			hasSeries = true;
+			isMinecraft = true;
+			seriesName = "Fly Boys";
+			int placeOfFence = title.indexOf("#");
+			int placeOfColon = title.indexOf(":");
+			seriesNumber = Integer.parseInt(title.substring(placeOfFence+1,placeOfColon));
+			seriesEpName = title.substring(placeOfColon+2);
+		} else {
+		if(title.contains("Etho's Modded Minecraft")){
+			hasSeries = true;
+			isMinecraft = true;
+			seriesName = "Etho's Modded Minecraft";
+			int placeOfFence = title.indexOf("#");
+			int placeOfColon = title.indexOf(":");
+			seriesNumber = Integer.parseInt(title.substring(placeOfFence+1,placeOfColon));
+			seriesEpName = title.substring(placeOfColon+2);
+		} else {
+		if(title.contains("Minecraft - Planetary Confinement #")){
+			hasSeries = true;
+			isMinecraft = true;
+			seriesName = "Planetary Confinement";
+			int placeOfFence = title.indexOf("#");
+			int placeOfColon = title.indexOf(":");
+			seriesNumber = Integer.parseInt(title.substring(placeOfFence+1,placeOfColon));
+			seriesEpName = title.substring(placeOfColon+2);
+		} else {
+		if(title.contains("Minecraft - HermitCraft #")){
+			hasSeries = true;
+			isMinecraft = true;
+			seriesName = "HermitCraft";
+			int placeOfFence = title.indexOf("#");
+			int placeOfColon = title.indexOf(":");
+			seriesNumber = Integer.parseInt(title.substring(placeOfFence+1,placeOfColon));
+			seriesEpName = title.substring(placeOfColon+2);
+		} else {
+		if(title.contains("Minecraft - HermitCraft UHC ")){
+			hasSeries = true;
+			isMinecraft = true;
+			seriesName = "HermitCraft UHC";
+			int placeOfSeason = title.indexOf(" S")+1;
+			int placeOfColon = title.indexOf(":");
+			seriesNumber = Integer.parseInt(title.substring(placeOfSeason+1,placeOfColon)) * 10000 + Integer.parseInt(title.substring(placeOfColon+10));
+			seriesEpName = title.substring(placeOfColon+2);
+		} else {
+		if(title.contains("Mini Hostile #1: RageQuit Holidays")){
+			hasSeries = true;
+			isMinecraft = true;
+			seriesName = "Random Minecraft";
+			seriesNumber = -1;
+			seriesEpName = title;
+		
+		
+		
+
+			
 			
 			
 			//----------------------- ADD MINECRAFT SERIES ------------------------------
@@ -186,45 +425,93 @@ public class CustomVideo implements Serializable {
 			seriesName = "DOTT";
 			seriesNumber = Integer.parseInt(title.substring(15,16));
 			seriesEpName = title.substring(17);
+		} else {
+		if(title.contains("Cube World - Episode")){
+			hasSeries = true;
+			seriesName = "Cube World";
+			int placeOfColon = title.indexOf(":");
+			seriesNumber = Integer.parseInt(title.substring(21,placeOfColon));
+			seriesEpName = title.substring(placeOfColon+2);
+		} else {
+		if(title.contains("Sam & Max - Episode")){
+			hasSeries = true;
+			seriesName = "Sam & Max";
+			int placeOfColon = title.indexOf(":");
+			seriesNumber = Integer.parseInt(title.substring(20,placeOfColon));
+			seriesEpName = title.substring(placeOfColon+2);
+		} else {
+		if(title.contains("Terraria 1.2 - Episode")){
+			hasSeries = true;
+			seriesName = "Terraria 1.2";
+			int placeOfColon = title.indexOf(":");
+			seriesNumber = Integer.parseInt(title.substring(23,placeOfColon));
+			seriesEpName = title.substring(placeOfColon+2);
+		} else {
+		if(title.contains("Starbound - Episode")){
+			hasSeries = true;
+			seriesName = "Starbound";
+			int placeOfColon = title.indexOf(":");
+			seriesNumber = Integer.parseInt(title.substring(20,placeOfColon));
+			seriesEpName = title.substring(placeOfColon+2);
+		} else {
+		if(title.contains("Etho Plays - Don't Starve")){
+			hasSeries = true;
+			seriesName = "Don't Starve";
+			seriesNumber = Integer.parseInt(title.substring(35));
+			seriesEpName = title.substring(27);
+		} else {
+		if(title.contains("Etho Plays - SOTS The Pit")){
+			hasSeries = true;
+			seriesName = "SOTS The Pit";
+			seriesNumber = Integer.parseInt(title.substring(35));
+			seriesEpName = title.substring(27);
+		} else {
+		if(title.contains("Etho Plays - Pixel Piracy")){
+			hasSeries = true;
+			seriesName = "Pixel Piracy";
+			seriesNumber = Integer.parseInt(title.substring(35));
+			seriesEpName = title.substring(27);
+		} else {
+		if(title.contains("Don't Starve Together")){
+			hasSeries = true;
+			seriesName = "Don't Starve Together";
+			int placeOfFence = title.indexOf("#");
+			int placeOfColon = title.indexOf(":");
+			seriesNumber = Integer.parseInt(title.substring(placeOfFence+1, placeOfColon));
+			seriesEpName = title.substring(placeOfColon+2);
+		} else {
+		if(title.contains("ARK Survival Evolved")){
+			hasSeries = true;
+			seriesName = "ARK Survival Evolved";
+			int placeOfFence = title.indexOf("#");
+			int placeOfColon = title.indexOf(":");
+			seriesNumber = Integer.parseInt(title.substring(placeOfFence+1, placeOfColon));
+			seriesEpName = title.substring(placeOfColon+2); 
+		} else {
+		if(title.contains("Terraria 1.3")){
+			hasSeries = true;
+			seriesName = "Terraria 1.3";
+			int placeOfFence = title.indexOf("#");
+			int placeOfColon = title.indexOf(":");
+			seriesNumber = Integer.parseInt(title.substring(placeOfFence+1, placeOfColon));
+			seriesEpName = title.substring(placeOfColon+2); 
 		
+		
+		
+
 		
 			
 			
 			
 			//------------------------- ADD OTHER SERIES -----------------------
 		
-		} else {
-			if(title.contains(":")){
-				hasSeries = true;
-				int placeOfDash = title.indexOf("-");
-				int placeOfFence = title.indexOf("#");
-				int placeOfColon = title.indexOf(":");
-				if(placeOfDash > 0){
-					seriesName = title.substring(0, placeOfDash-1);
-				} else if(placeOfFence > 0) {
-					seriesName = title.substring(0, placeOfFence-1);
-				}
-				if(placeOfFence > 0){
-					try{
-						seriesNumber = Integer.parseInt(title.substring(placeOfFence+1, placeOfColon));
-					} catch(Exception e){
-						System.out.println(title);
-					}
-				} else {	//track word "episode"
-					int placeOfEpisode = title.indexOf("Episode");
-					try {
-						seriesNumber = Integer.parseInt(title.substring(placeOfEpisode+8));
-					} catch(Exception e){
-						System.out.println(title);
-					}
-				}
-				
-				seriesEpName = title.substring(placeOfColon+2);
-				
-			}
-		}}}}}}}}}}}}}}
-		if(seriesNumber == 0){
-			System.out.println(title + "  || add to 'other'");
+		}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+		if(hasSeries == false){
+			hasSeries = true;
+			seriesName = "Random Video";
+			seriesNumber = -1;
+			seriesEpName = title;
+			System.out.println(title);
 		}
 	}
 	

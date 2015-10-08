@@ -108,8 +108,7 @@ public class Main extends Application {
 		VBox duration = new VBox();
 		VBox series = new VBox();
 		List<CustomVideo> vids = UploadedVideosDatabase.getVideos();
-		for(CustomVideo vid : vids){
-			System.out.println(vid.getTitle());
+		for(CustomVideo vid : vids){			
 			Text vidTitle = new Text(vid.getTitle());
 			title.getChildren().add(vidTitle);
 			Text vidDate = new Text(""+vid.getDate());
