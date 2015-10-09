@@ -1,9 +1,16 @@
 package data;
 
+import java.io.Serializable;
 import java.util.LinkedList;
+import java.util.List;
 
-public class Series {
-	private static LinkedList<Series> list;
+public class Series implements Serializable {
+	/**
+	 * default ID so Eclipse stops bothering me with warnings.
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private static LinkedList<Series> list = new LinkedList<Series>();
 	
 	private String name;
 	private boolean minecraft;
@@ -11,13 +18,26 @@ public class Series {
 	private boolean collab;
 	private String collabNames;
 	private LinkedList<CustomVideo> episodes;
+	private Series previousSeries;
+	private Series nextSeries;
+	private boolean modded;
+	private boolean survivalMap;
+	private boolean pvp;
+	
 	
 	private Series(String inName, boolean inMinecraft){
 		name = inName;
 		minecraft = inMinecraft;
+		modded = false;
+		survivalMap = false;
 		episodes = new LinkedList<CustomVideo>();
 	}
 	
+	private Series(String inName, boolean inMinecraft, boolean inModded, boolean map){
+		this(inName, inMinecraft);
+		modded = inModded;
+		survivalMap = map;
+	}
 	
 	private static boolean alreadyPresent(String inName){
 		for(int i=0;i<list.size();i++){
@@ -41,14 +61,14 @@ public class Series {
 	}
 	
 	private void addEpisode(CustomVideo in){
-		episodes.add(in);
+		episodes.addFirst(in);
 	}
 	
 	//---------------- public methods start here ----------------
 	
-	public static void addToSeries(CustomVideo in, String inName, boolean inMinecraft){
+	public static void addToSeries(CustomVideo in, String inName, boolean inMinecraft, boolean isModded, boolean isMap){
 		if(!alreadyPresent(inName)){
-			Series newSeries = new Series(inName, inMinecraft);
+			Series newSeries = new Series(inName, inMinecraft, isModded, isMap);
 			list.add(newSeries);
 		} 
 		list.get(getIndex(inName)).addEpisode(in);
@@ -65,12 +85,16 @@ public class Series {
 		}
 	}
 	
+	public static List<Series> getSeries(){
+		return list;
+	}
+	
 	public String getName(){
 		return name;
 	}
 	
-	public CustomVideo[] getEpisodes(){
-		return (CustomVideo[]) episodes.toArray();
+	public List<CustomVideo> getEpisodes(){
+		return episodes;
 	}
 	
 	public boolean isMinecraft(){
@@ -100,6 +124,50 @@ public class Series {
 	public String getCollabNames(){
 		return collabNames;
 	}
+	
+	public void setPreviousSeries(Series in){
+		previousSeries = in;
+	}
+	
+	public Series getPreviousSeries(){
+		return previousSeries;
+	}
+	
+	public void setNextSeries(Series in){
+		nextSeries = in;
+	}
+	
+	public Series getNextSeries(){
+		return nextSeries;
+	}
+	
+	public void setModded(boolean in){
+		modded = in;
+	}
+	
+	public boolean isModded(){
+		return modded;
+	}
+	
+	public void setSurvivalMap(boolean in){
+		survivalMap = in;
+	}
+	
+	public boolean isSurvivalMap(){
+		return survivalMap;
+	}
+	
+	public void setPvp(boolean in){
+		pvp = in;
+	}
+	
+	public boolean isPvp(){
+		return pvp;
+	}
+
+
+	
+	
 	
 	
 }

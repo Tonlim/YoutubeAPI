@@ -8,6 +8,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 
+
+
+import utility.ListManipulator;
+
 import com.google.api.client.http.HttpRequest;
 import com.google.api.client.http.HttpRequestInitializer;
 import com.google.api.services.youtube.YouTube;
@@ -19,6 +23,7 @@ import com.google.api.services.youtube.model.Video;
 import com.google.api.services.youtube.model.VideoListResponse;
 
 import data.CustomVideo;
+import data.Series;
 
 public class VideoHandleLogic {
 	private static final String API_KEY = "AIzaSyBB16aIP-SlnWAsD3JFCI1aKBRBbdWF0sc";
@@ -44,7 +49,11 @@ public class VideoHandleLogic {
 				
 		//get the corresponding videos
 		List<CustomVideo> videos = getVideosByID(videoIDs);
+		List<Series> series = Series.getSeries();
+		series = ListManipulator.invertListOrder(series);
+		videos = ListManipulator.invertListOrder(videos);
 		UploadedVideosDatabase.setVideos(videos);
+		UploadedVideosDatabase.setSeries(series);
 		UploadedVideosDatabase.close();
 		Main.statusMessage.setText("Database updated");	
 	}

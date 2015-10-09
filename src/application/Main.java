@@ -4,10 +4,9 @@ import iohandling.UploadedVideosDatabase;
 
 import java.util.List;
 
-import com.sun.org.apache.xerces.internal.util.SynchronizedSymbolTable;
-
+import utility.TimeConverter;
 import data.CustomVideo;
-import data.utility.TimeConverter;
+import data.Series;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -27,6 +26,7 @@ import javafx.scene.text.Text;
 public class Main extends Application {
 	public static HBox centerData;
 	public static Text statusMessage;
+	public static ScrollPane scrollpane;
 	
 	/*
 	 * main: setup of gui
@@ -37,10 +37,10 @@ public class Main extends Application {
 			BorderPane root = new BorderPane();
 			
 			//top: menu with buttons
-			BorderPane top = new BorderPane();
+			HBox top = new HBox();
 			root.setTop(top);
 			Button updateDatabase = new Button("Update Database");
-			top.setLeft(updateDatabase);
+			top.getChildren().add(updateDatabase);
 			updateDatabase.setOnAction(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
@@ -63,15 +63,33 @@ public class Main extends Application {
 				}
 			});
 			
+			Button showFullDatabase = new Button("Show database");
+			top.getChildren().add(showFullDatabase);
+			showFullDatabase.setOnAction(new EventHandler<ActionEvent>(){
+				@Override
+				public void handle(ActionEvent event){
+					setupDatabaseDisplay(centerData);
+				}
+			});
+			
+			Button showSeries = new Button("Show Series");
+			top.getChildren().add(showSeries);
+			showSeries.setOnAction(new EventHandler<ActionEvent> (){
+				@Override
+				public void handle(ActionEvent event){
+					setUpSeriesOverview(centerData);
+				}
+			});
+			
 			//center: data
-			ScrollPane center = new ScrollPane();
-			root.setCenter(center);
+			scrollpane = new ScrollPane();
+			root.setCenter(scrollpane);
 			centerData = new HBox();
-			center.setContent(centerData);
+			scrollpane.setContent(centerData);
 	
 			setupDatabaseDisplay(centerData);
 			
-
+			
 			
 			//bottom: status message
 			BorderPane bottom = new BorderPane();
@@ -152,6 +170,94 @@ public class Main extends Application {
 		
 		box.setPadding(new Insets(10));
 		date.setPadding(new Insets(0,10,0,10));
+		scrollpane.setVvalue(0.0);
+		
+	}
+	
+	private void setUpSeriesOverview(HBox box){
+		box.getChildren().clear();
+		VBox actualBox = new VBox();
+		
+		
+		List<Series> series = UploadedVideosDatabase.getSeries();
+		for(int i=0;i<series.size();i++){
+			Button seriesButton = new Button(series.get(i).getName());
+			final int j = i;
+			seriesButton.setOnAction(new EventHandler<ActionEvent>(){
+				@Override
+				public void handle(ActionEvent event) {
+					setUpSeriesDetails(series.get(j),box);
+				}
+			});
+			actualBox.getChildren().add(seriesButton);
+		}
+		box.getChildren().add(actualBox);
+		scrollpane.setVvalue(0.0);
+	}
+	
+	private void setUpSeriesDetails(Series series, HBox box){
+		box.getChildren().clear();
+		BorderPane canvas = new BorderPane();
+		box.getChildren().add(canvas);
+		//name, description, other info in top
+		VBox top = new VBox();
+		canvas.setTop(top);
+		Text nameNode = new Text(series.getName());
+		top.getChildren().add(nameNode);
+		Text isMinecraftNode = new Text(series.isMinecraft()?"Minecraft":"");
+		top.getChildren().add(isMinecraftNode);
+		Text descriptionNode = new Text(series.getDescription());
+		top.getChildren().add(descriptionNode);
+		
+		List<CustomVideo> vids = series.getEpisodes();
+		HBox dataBox = new HBox();
+		canvas.setCenter(dataBox);
+		//episodes in HBox like main overview
+		fillHBox(dataBox,vids);
+	}
+	
+	private void fillHBox(HBox box, List<CustomVideo> vids){
+		VBox title = new VBox();
+		VBox date = new VBox();
+		VBox duration = new VBox();
+		for(CustomVideo vid : vids){			
+			Text vidTitle = new Text(vid.getTitle());
+			title.getChildren().add(vidTitle);
+			Text vidDate = new Text(""+vid.getDate());
+			date.getChildren().add(vidDate);
+			int[] dayHourMinSec = TimeConverter.SecToFull(vid.getDuration());
+			Text vidDuration;
+			
+			if(dayHourMinSec[1] == 0){	//hour = 0
+				if(dayHourMinSec[3]<10){	//extra 0 needed for seconds
+					vidDuration = new Text(""+dayHourMinSec[2]+":0"+dayHourMinSec[3]);
+				} else {
+					vidDuration = new Text(""+dayHourMinSec[2]+":"+dayHourMinSec[3]);
+				}
+			} else {	//hour > 0
+				if(dayHourMinSec[2]<10){	//extra 0 needed for minutes
+					if(dayHourMinSec[3]<10){	//extra 0 needed for seconds
+						vidDuration = new Text(""+dayHourMinSec[1]+":0"+dayHourMinSec[2]+":0"+dayHourMinSec[3]);
+					} else {
+						vidDuration = new Text(""+dayHourMinSec[1]+":0"+dayHourMinSec[2]+":"+dayHourMinSec[3]);
+					}
+				} else {
+					if(dayHourMinSec[3]<10){	//extra 0 needed for seconds
+						vidDuration = new Text(""+dayHourMinSec[1]+":"+dayHourMinSec[2]+":0"+dayHourMinSec[3]);
+					} else {
+						vidDuration = new Text(""+dayHourMinSec[1]+":"+dayHourMinSec[2]+":"+dayHourMinSec[3]);
+					}
+				}
+			}
+			
+			duration.getChildren().add(vidDuration);
+		}
+		box.getChildren().clear();
+		box.getChildren().addAll(title,date,duration);
+		
+		box.setPadding(new Insets(10));
+		date.setPadding(new Insets(0,10,0,10));
+		scrollpane.setVvalue(0.0);
 	}
 	
 	
